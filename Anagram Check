@@ -1,0 +1,52 @@
+Algorithm:
+
+1.First, check if both strings are the same length.
+
+  -If not, they can't be anagrams → return false.
+
+2.Create an array of size 256 (for ASCII characters) and set all values to 0.
+
+3.For each character in the first string, increase its count.
+
+4.For each character in the second string, decrease its count.
+
+5.If all counts are 0, the strings are anagrams → return true.
+
+6.If any count is not 0 → return false.
+
+
+
+Pseudocode:
+
+If length(s1) != length(s2): return false
+Initialize count[256] = {0}
+for each char in s1: count[char]++
+for each char in s2: count[char]--
+if any count[i] != 0: return false
+return true
+
+
+
+C Code:
+
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+bool isAnagram(char *s1, char *s2) {
+    if(strlen(s1) != strlen(s2))
+        return false;
+    
+    int count[256] = {0};
+    for(int i = 0; s1[i]; i++) {
+        count[(unsigned char)s1[i]]++;
+        count[(unsigned char)s2[i]]--;
+    }
+
+    for(int i = 0; i < 256; i++) {
+        if(count[i] != 0)
+            return false;
+    }
+
+    return true;
+}
