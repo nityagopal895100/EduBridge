@@ -1,0 +1,53 @@
+Algorithm:
+
+1.A palindrome reads the same forwards and backwards.
+
+2.For each letter in the string, do two checks:
+
+  -Check all palindromes with odd length (centered at the letter).
+
+  -Check all palindromes with even length (centered between letters).
+
+3.For each center:
+
+  -Expand outwards to left and right as long as both letters are equal.
+
+  -For each match, increase the count.
+
+4.After checking all centers, return the total count.
+
+
+
+
+
+Pseudocode:
+
+for center from 0 to 2n-1:
+    left = center / 2
+    right = left + center % 2
+    while left >= 0 and right < n and s[left] == s[right]:
+        count++
+        left--
+        right++
+
+
+
+
+C Code:
+
+#include <stdio.h>
+#include <string.h>
+
+int countPalindromicSubstrings(char *s) {
+    int n = strlen(s), count = 0;
+    for(int center = 0; center < 2 * n - 1; center++) {
+        int left = center / 2;
+        int right = left + center % 2;
+        while(left >= 0 && right < n && s[left] == s[right]) {
+            count++;
+            left--;
+            right++;
+        }
+    }
+    return count;
+}
