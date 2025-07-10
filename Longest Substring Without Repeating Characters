@@ -1,0 +1,54 @@
+Algorithm:
+
+1.Create an array to remember where each character was last seen.
+
+2.Start from the beginning of the string.
+
+3.Keep a start pointer where the current substring starts.
+
+4.For every character:
+
+  -If it was seen before after the current start:
+
+    -Move start to the next of the previous position.
+
+  -Otherwise, continue.
+
+5.Update the maximum length after each step.
+
+
+
+
+Pseudocode:
+
+start = 0, maxLen = 0
+map[256] = {-1}
+for end from 0 to n-1:
+    if map[s[end]] >= start:
+        start = map[s[end]] + 1
+    map[s[end]] = end
+    maxLen = max(maxLen, end - start + 1)
+
+
+
+
+
+C Code:
+
+#include <stdio.h>
+#include <string.h>
+
+int longestUniqueSubstring(char *s) {
+    int lastIndex[256];
+    for(int i = 0; i < 256; i++) lastIndex[i] = -1;
+
+    int maxLen = 0, start = 0;
+    for(int i = 0; s[i]; i++) {
+        if(lastIndex[(unsigned char)s[i]] >= start)
+            start = lastIndex[(unsigned char)s[i]] + 1;
+        lastIndex[(unsigned char)s[i]] = i;
+        if(i - start + 1 > maxLen)
+            maxLen = i - start + 1;
+    }
+    return maxLen;
+}
